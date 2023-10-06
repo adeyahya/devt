@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     utils.url = "github:numtide/flake-utils";
+
   };
 
   outputs = { self, nixpkgs, utils }:
@@ -17,15 +18,16 @@
       in
       {
         devShells.default = pkgs.mkShellNoCC {
-          buildInputs = with pkgs; [
+          buildInputs = [
+            ./sql-migrate.nix
             # go 1.19 (specified by overlay)
-            go
+            pkgs.go
 
             # goimports, godoc, etc.
-            gotools
+            pkgs.gotools
 
             # https://github.com/golangci/golangci-lint
-            golangci-lint
+            pkgs.golangci-lint
           ];
 
           shellHook = ''
