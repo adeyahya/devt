@@ -19,8 +19,6 @@ buildGoModule rec {
   proxyVendor = true; # darwin/linux hash mismatch
   vendorHash = "sha256-ZHnM3Wumsfg389nqt75/6BhhputNf4MtZxRKVAoHh6E=";
 
-  subpackages = ["cmd/migrate"];
-
   meta = with lib; {
     description = "Database schema migration";
     license = licenses.mit;

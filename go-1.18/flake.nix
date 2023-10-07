@@ -7,7 +7,6 @@
   };
 
   outputs = { self, nixpkgs, utils }:
-
     utils.lib.eachDefaultSystem (system:
       let
         goVersion = 18;
@@ -19,7 +18,6 @@
       {
         devShells.default = pkgs.mkShellNoCC {
           buildInputs = [
-            ./sql-migrate
             # go 1.19 (specified by overlay)
             pkgs.go
 
@@ -28,10 +26,13 @@
 
             # https://github.com/golangci/golangci-lint
             pkgs.golangci-lint
+            ./sql-migrate
           ];
 
           shellHook = ''
             ${pkgs.go}/bin/go version
+            go install github.com/rubenv/sql-migrate/...@latest
+            export PATH=$PATH:~/go/bin
           '';
         };
       });
